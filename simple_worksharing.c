@@ -11,24 +11,24 @@ int main()
 {
     double start_time = omp_get_wtime();
 
-    int a[999999];
+    int size = 999999;
+    int a[size];
 
-#pragma omp parallel
-#pragma omp for schedule(static, 111111)
-    for (int i = 0; i < 999999; i++)
+// #pragma omp parallel for
+#pragma omp parallel for schedule(static, 111111)
+    for (int i = 0; i < size; i++)
     {
-        a[i] = i;
-        a[i] = i * i;
-        a[i] = i * i * i;
+        for (int j = 0; j < 10; j++)
+            a[i] = i + j;
     }
 
-    double end_time = omp_get_wtime();
+    // double end_time = omp_get_wtime();
 
-    print(a, 999999);
+    // print(a, size);
 
-    double time = end_time - start_time;
+    // double time = end_time - start_time;
 
-    printf("Run Time = %lf\n", time);
+    printf("Run Time = %lf\n", omp_get_wtime() - start_time);
 
     return 0;
 }
