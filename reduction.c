@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include <omp.h>
 
-void print(int a[], int size)
-{
-    for (int i = 0; i < size; i++)
-        printf("%d ", a[i]);
-    printf("\n");
-}
-int main()
+#define PAD 8
+
+void main()
 {
     double start_time = omp_get_wtime();
+    double no_of_steps = 100000000;
 
-    double ave = 0.0;
-    int size = 1000;
-    double a[size];
+    double sum = 0.0;
 
-    for (int i = 0; i < size; i++)
-        a[i] = i;
+#pragma omp parallel for reduction(+ \
+                                   : sum)
+    for (int i = 0; i < (int)no_of_steps; i++)
+    {
+        double x = (double)i / no_of_steps;
+        double val = 4.0 / (1.0 + x * x);
+        sum += val / no_of_steps;
+    }
 
-    printf("Run Time = %lf\n", omp_get_wtime() - start_time);
-
-    return 0;
+    printf("Total Area = %f calculated in time = %f\n", sum, omp_get_wtime() - start_time);
 }
