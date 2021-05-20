@@ -22,12 +22,6 @@ int main()
             a[i] = i + j;
     }
 
-    // double end_time = omp_get_wtime();
-
-    // print(a, size);
-
-    // double time = end_time - start_time;
-
     printf("Run Time = %lf\n", omp_get_wtime() - start_time);
 
     return 0;
