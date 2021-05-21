@@ -28,7 +28,7 @@ void testpoint(struct d_complex c)
         z.r = temp;
         if ((z.r * z.r + z.i * z.i) > 4.0)
         {
-#pragma omp atomic
+#pragma omp atomic //needs to be protected using atomic since some other thread might start numoutside++ on a thread which was midway that
             numoutside++;
             break;
         }
