@@ -63,7 +63,7 @@ History:
 #include "random.h"
 #include "random.c"
 
-static long num_trials = 1000000;
+static long num_trials = 100000000;
 
 int main()
 {
@@ -74,7 +74,7 @@ int main()
 
     seed(-r, r);
 
-    // double start = omp_get_wtime();
+    double start = omp_get_wtime();
 
 #pragma omp parallel for private(x, y, test) reduction(+ \
                                                        : Ncirc)
@@ -91,7 +91,7 @@ int main()
 
     pi = 4.0 * ((double)Ncirc / (double)num_trials);
 
-    // printf("Time : %f", omp_get_wtime() - start);
+    printf("Time : %f", omp_get_wtime() - start);
 
     printf("\n %ld trials, pi is %lf \n\n", num_trials, pi);
 
